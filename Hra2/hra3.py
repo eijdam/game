@@ -7,10 +7,10 @@ screen = pg.display.set_mode((1920, 1080), pg.RESIZABLE)
 pg.display.set_caption("Game")
 font1 = pg.font.Font("fonts/vhs.ttf", 35)
 pg.mouse.set_visible(False)
-# Define the cursor radius and the color of the glow
-CURSOR_RADIUS = 10
-GLOW_COLOR = (255, 255, 255)
-GLOW_ALPHA = 0
+# Novy Kurzor
+KURSOR_RADIUS = 10
+KURZOR_COLOR = (255, 255, 255)
+KURZOR_ALPHA = 0
 
 
 class Button:
@@ -47,14 +47,14 @@ def loadGIF(filename):
     frames = []
     for frame in ImageSequence.Iterator(pilImage):
         frame = frame.convert('RGBA')
-        frame = frame.resize((1920, 1080), resample=Image.BOX)  # Resize the frame
+        frame = frame.resize((1920, 1080), resample=Image.BOX)  # zmena framu gifu
         pygameImage = pg.image.fromstring(
             frame.tobytes(), frame.size, frame.mode).convert_alpha()
         frames.append(pygameImage)
     return frames
 
-
-class AnimatedSpriteObject(pg.sprite.Sprite):
+#framy gifu
+class giframe(pg.sprite.Sprite): 
     def __init__(self, x, y, frames, animation_speed):
         super().__init__()
         self.frames = frames
@@ -79,7 +79,7 @@ play_button = Button(820, 500, "PLAY", True)
 quit_button = Button(820, 570, "QUIT", True)
 
 frames = loadGIF("videos/VHSvideo.gif")
-background = AnimatedSpriteObject(960, 540, frames, 0.1)
+background = giframe(960, 540, frames, 0.1)
 
 clock = pg.time.Clock()
 
@@ -101,12 +101,12 @@ while running:
     if quit_button.check_click():
         running = False
 
-    # Draw cursor with glow effect
+    #Kreslenie Kurzoru
     mouse_pos = pg.mouse.get_pos()
-    cursor = pg.Surface((CURSOR_RADIUS*2, CURSOR_RADIUS*2), pg.SRCALPHA)
-    pg.draw.circle(cursor, GLOW_COLOR + (GLOW_ALPHA,), (CURSOR_RADIUS, CURSOR_RADIUS), CURSOR_RADIUS)
-    screen.blit(cursor, (mouse_pos[0]-CURSOR_RADIUS, mouse_pos[1]-CURSOR_RADIUS))
-    pg.draw.circle(screen, GLOW_COLOR, mouse_pos, CURSOR_RADIUS, 0)
+    cursor = pg.Surface((KURSOR_RADIUS*2, KURSOR_RADIUS*2), pg.SRCALPHA)
+    pg.draw.circle(cursor, KURZOR_COLOR + (KURZOR_ALPHA,), (KURSOR_RADIUS, KURSOR_RADIUS), KURSOR_RADIUS)
+    screen.blit(cursor, (mouse_pos[0]-KURSOR_RADIUS, mouse_pos[1]-KURSOR_RADIUS))
+    pg.draw.circle(screen, KURZOR_COLOR, mouse_pos, KURSOR_RADIUS, 0)
 
     pg.display.update()
     clock.tick(60)
@@ -114,14 +114,6 @@ while running:
 pg.quit()
 
 
-
-
-
-# Load the GIF frames
-
-
-##adam kup zajtra ryzu 5/14/2023
-       
 
 
 
